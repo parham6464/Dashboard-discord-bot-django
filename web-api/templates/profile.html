@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Your Bot - a Discord Bot</title>
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+    <link rel="stylesheet" href="https://unpkg.com/tippy.js@6/animations/scale.css" />
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <script src="{%static 'js/jquery-3.6.0.js' %}"></script>
+  </head>
+  <body>
+    <!-- Back To Top Start -->
+    <a id="backtotop" data-tippy-content="Back To Top.">
+      <i class="fa-solid fa-angle-up has-text-white fa-2xl mt-5"></i>
+    </a>
+    <!-- Back To Top End -->
+
+
+
+    <!-- Hero Section Start -->
+    <section style="padding: 100px; display: block;" dir="rtl" class="hero bg-base is-fullheight">
+      {% if messages %}
+      <ul class="messages">
+      {% for message in messages %}
+      <div class="alert alert-success alert-dismissible text-center" role="alert">
+          
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  
+      {% endfor %}
+      </div>
+      </ul>
+      {% endif %}
+  
+        <h1 style="text-align: center;color: white;">به پنل کاربری خوش آمدید</h1>
+      <section style="margin-top: 100px;" >
+        <!-- <form method="POST" action></form> -->
+        <div >
+          <form action="" method="post" dir="rtl" style="width: 100%;max-width: 100%;display: flex;justify-content: space-between;">
+            {% csrf_token %}
+            <div class="form-group">
+              <label style="color: white;" for="exampleFormControlSelect1">سرور خود را انتخاب کنید</label>
+              <select style="width: 200px;" class="form-control" id="exampleFormControlSelect1" name='dropdown' onchange='this.form.submit()'>
+                <option disabled selected value>انتخاب سرور</option>
+                {% if selected != None %}
+
+                  {% for i in servers.keys %}
+                    {% if i == selected %}
+                    <option selected>{{i}}</option>
+                    {%else%}
+                    <option>{{i}}</option>
+                    {% endif %}
+                  {% endfor %}
+
+                {% else %}
+                  {% for i in servers.keys %}
+                  <option>{{i}}</option>
+                  {% endfor %%}
+                {% endif %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label style="color: white;" for="exampleFormControlSelect1">چنل ارسال تبلیغ در سرور خود را انتخاب کنید</label>
+              <select style="width: 200px;" class="form-control" id="exampleFormControlSelect1" name='channels'>
+                {% if channels != None %}
+                  <option disabled selected value>انتخاب چنل</option>
+                  {% for i in channels.keys %}
+                    {% if channel_selected %}
+                        {% if channel_selected == i %}
+                          <option selected >{{i}}</option>
+                        {% else %}
+                          <option>{{i}}</option>
+                        {% endif %}
+                    {%else%}
+                      <option>{{i}}</option>
+                    {% endif %}
+                  {% endfor %}
+                {% else %}
+                  <option disabled selected value>انتخاب چنل</option>
+                {% endif %}
+
+              </select>
+            </div>
+            <div class="form-group">
+              <label  style="color: white;" for="exampleFormControlSelect1">دسته بندی سرور خود را انتخاب کنید</label>
+              <select style="width: 200px;" class="form-control" id="exampleFormControlSelect1" name='category'>
+                <option disabled selected value>انتخاب دسته بندی</option>
+                  {% for i in genres_list %}
+                    {% if current_genres %}
+                        {% if current_genres == i %}
+                          <option selected >{{i}}</option>
+                        {% else %}
+                          <option>{{i}}</option>
+                        {% endif %}
+                    {%else%}
+                      <option>{{i}}</option>
+                    {% endif %}
+                  {% endfor %}
+              </select>
+            </div>
+            <div class="form-group">
+              <label style="color: white;" for="exampleFormControlSelect1">در چه سرورهایی تبلیغ خودتان ارسال شود</label>
+              <select style="width: 200px;" class="form-control" id="exampleFormControlSelect1" name='tabadol'>
+                <option disabled selected value>انتخاب دسته بندی</option>
+                {% for i in tabadol_lists %}
+                  {% if current_tabadol %}
+                    {% if current_tabadol == i %}
+                      <option selected >{{i}}</option>
+                    {% else %}
+                      <option>{{i}}</option>
+                    {% endif %}
+              {%else%}
+                <option>{{i}}</option>
+              {% endif %}
+              {% endfor %}
+            </select>
+            </div>
+              
+        </div>
+        
+        
+          <div class="form-group">
+            <label style="color: white;float: right;" for="exampleFormControlInput1">عنوان بنر</label>
+            {% if title_banner %}
+              <input type="text" class="form-control" id="exampleFormControlInput1" name='title_banner' value='{{title_banner}}' placeholder="عنوان بنر را وارد کنید ...">
+            {% else %}
+              <input type="text" class="form-control" id="exampleFormControlInput1" name='title_banner' placeholder="عنوان بنر را وارد کنید ...">
+            {% endif %}
+
+            </div>
+          <div class="form-group">
+            <label style="color: white;float: right;" for="exampleFormControlInput1">لینک سرور</label>
+            {% if link_banner %}
+            <input type="text" class="form-control" id="exampleFormControlInput1" name='link_banner' value='{{link_banner}}' placeholder="لینک سرور خود را وارد کنید ...">
+            {% else %}
+            <input type="text" class="form-control" id="exampleFormControlInput1" name='link_banner' placeholder="لینک سرور خود را وارد کنید ...">
+            {% endif %}
+
+            
+          </div>
+          <div class="form-group">
+            <label dir="rtl" style="color: white;text-align: right;justify-content: right;float: right;" for="exampleFormControlTextarea1">متن بنر</label>
+            {% if body_banner %}
+            <textarea placeholder="متن بنر خود را وارد کنید ..." name="body_banner"  class="form-control" id="exampleFormControlTextarea1" rows="3">{{body_banner}}</textarea>
+            {% else %}
+            <textarea placeholder="متن بنر خود را وارد کنید ..." name="body_banner" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            {% endif %}
+          </div>
+          <button type="submit" style="float: right;" class="btn btn-primary mb-2" onclick="this.form.submit()">ثبت تنظیمات</button>
+        </form>
+        </section>
+    </section>
+    <!-- Hero Section End -->
+    <!--body section-->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <!--body section end-->
