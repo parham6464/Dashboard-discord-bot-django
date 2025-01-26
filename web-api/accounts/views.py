@@ -24,8 +24,8 @@ redirect_login = "https://discord.com/oauth2/authorize?client_id=126785300947638
 ####################
 
 API_ENDPOINT = 'https://discord.com/api/v10'
-CLIENT_ID = '1267853009476386897'
-CLIENT_SECRET = 'l67Q05jVqQi2JKroZ-9ahaYxDHLKKKe7'
+CLIENT_ID = 'your id'
+CLIENT_SECRET = 'yoir secret'
 REDIRECT_URI = 'http://127.0.0.1:8000/auth2/discord/login/redirect'
 
 cluster = MongoClient("url")
@@ -815,7 +815,7 @@ def profileView(request):
             guild_id = my_temp_ids[f'{selected_value}']
         
         response3 = requests.get(f"https://discord.com/api/v6/guilds/{guild_id}/channels" , headers={
-            'Authorization': f"Bot MTI2Nzg1MzAwOTQ3NjM4Njg5Nw.GEngSz.sKoQgCseG1ySMunYaOBHGmbQ5H0xkp0zvwckns"
+            'Authorization': f"Bot your token"
         })
 
         request.session['channel_details'] = response3.json()
