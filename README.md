@@ -89,15 +89,15 @@ python main.py
 ```
 
 ## API
-1.make the models first
+1. make the models first
 ```py
 python manage.py makemigrations
 python manage.py migrate
 ```
-2.Enter your client and Secret ID of your discord account in account/views
-3.Enter your own redirect url of your bot in account/views
-4.replace your bot token in the API in account/views you can find it in the end lines of code
-5.run the server
+2. Enter your client and Secret ID of your discord account in account/views
+3. Enter your own redirect url of your bot in account/views
+4. replace your bot token in the API in account/views you can find it in the end lines of code
+5. run the server
 ```py
 python manage.py runserver
 ```
